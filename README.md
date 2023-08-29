@@ -1,2 +1,2 @@
 # demo_dashboard
-Demo dashboard using snowflake+sirflow+dbt.
+Demo dashboard using snowflake+airflow+dbt.
