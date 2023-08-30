@@ -13,7 +13,6 @@ import os
 
 # -------python functions
 def download_data():
-    print('AAAAAAAA ARPAN')
     # Create the directory (if it doesn't exist)
     os.makedirs("/home/airflow/.kaggle", exist_ok=True)
     
