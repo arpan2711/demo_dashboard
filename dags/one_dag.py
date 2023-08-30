@@ -59,7 +59,7 @@ def download_data():
 SNOWFLAKE_CONN_ID = "arpan-airflow-sf-conn"
 # SNOWFLAKE_TABLE_FOR_QUERY = "EMP_BASIC"
 
-SQL_CREATE_TABLE_SPEND_PER_CUSTOMER = ( 
+SQL_CREATE_TABLE = ( 
     f"put file:///home/airflow/kaggle_data/olist_customers_dataset.csv @SF_TUTS.PUBLIC.%olist_customers_dataset;" 
 )
 
@@ -116,9 +116,9 @@ with DAG(dag_id='one-dag',
 
 
     # exporting to snowflake 
-    drop_table_spend_per_customer_if_exists=SnowflakeOperator(
-        task_id='drop_table_spend_per_customer_if_exists',
-        sql=SQL_CREATE_TABLE_SPEND_PER_CUSTOMER
+    first_table=SnowflakeOperator(
+        task_id='first_table',
+        sql=SQL_CREATE_TABLE
     )
 
 
@@ -137,6 +137,7 @@ with DAG(dag_id='one-dag',
         sql=SQL_LOAD_DATA25
     )
 
-begin >> kaggle_data
+begin >> kaggle_data >> [first_table, second_table] 
+second_table >> [fill_table, fill_table2]
 
  
